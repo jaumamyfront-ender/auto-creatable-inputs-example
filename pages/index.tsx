@@ -25,7 +25,7 @@ export default function Home() {
             href="/serverSideHome"
           >
             <Image
-              className="dark:invert"
+              className="dark:invert "
               src="/vercel.svg"
               alt="Vercel logomark"
               width={20}
