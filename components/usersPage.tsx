@@ -1,20 +1,19 @@
 import { UsersListProps } from "@/types/Users";
+import Link from "next/link";
 
 export default function UsersList({ data }: UsersListProps) {
-  console.log(data);
   return (
-    <div className="flex flex-col self-center items-center justify-center bg-zinc-500 p-6">
-      <h1 className="flex self-center">Użytkownicy:</h1>
-      <ul>
+    <div className="flex flex-col items-center justify-center bg-zinc-500 p-6 min-h-screen">
+      <h1 className="text-xl font-semibold text-white mb-4">Użytkownicy:</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
         {data.map((name) => (
-          <li
-            key={name}
-            className="border-2 border-amber-300 rounded-lg text-center mb-2 cursor-pointer"
-          >
-            {name}
-          </li>
+          <Link key={name} href={`get-server-side/${name}`}>
+            <div className="border-2 border-amber-300 rounded-lg text-center text-white p-4 bg-none cursor-pointer hover:bg-amber-600 transition">
+              {name}
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
