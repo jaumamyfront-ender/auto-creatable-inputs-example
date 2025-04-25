@@ -104,7 +104,7 @@ export default function ({ data }: UserDetails) {
       </section>
       <section id="add product">
         <button
-          className="w-50 h-20 border border-amber-700 bg-amber-300 cursor-pointer rounded-lg"
+          className="w-50 h-20 border border-amber-700 bg-amber-300 cursor-pointer rounded-lg mt-6"
           onClick={handleOpenModal}
         >
           add product
@@ -128,7 +128,7 @@ const Modal = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-50 z-50 transition transition-shadow">
+    <div className="fixed inset-0 flex items-center justify-center bg-discord-dark bg-opacity-50 z-50 animate-modal-in">
       <div className="bg-white p-6 rounded-lg relative">
         <button
           className="absolute top-2 right-2 text-gray-700"
