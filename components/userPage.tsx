@@ -258,6 +258,7 @@ export function DynamicInputs() {
                 }}
                 className="block w-[250px] h-[34px] px-2 py-1 border border-gray-300 rounded bg-yellow-100 focus:outline-none focus:ring-0 focus:border-gray-400"
               >
+                <option value="">Slecet option...</option>
                 <option value="Model">Model</option>
                 <option value="Capacity Of Ram">Capacity Of Ram</option>
                 <option value="Capacity of SSD">Capacity of SSD</option>
