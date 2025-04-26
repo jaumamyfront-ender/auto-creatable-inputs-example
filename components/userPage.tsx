@@ -219,9 +219,10 @@ export function DynamicInputs() {
   };
 
   const validate = (value: string) => {
-    if (!value.trim()) return "Поле не должно быть пустым";
-    if (value.length < 3) return "Минимум 3 символа";
-    if (value.length > 20) return "Максимум 20 символов";
+    if (!value.trim()) return "The field must not be empty";
+    if (value.length < 3) return "Minimum 3 characters";
+    if (value.length > 20) return "Maximum 20 characters";
+
     return null;
   };
 
@@ -257,15 +258,14 @@ export function DynamicInputs() {
                 }}
                 className="block w-[250px] h-[34px] px-2 py-1 border border-gray-300 rounded bg-yellow-100 focus:outline-none focus:ring-0 focus:border-gray-400"
               >
-                <option value="">Change...</option>
-                <option value="Rozmiar">Model</option>
-                <option value="Kolor">Capacity Of Ram</option>
-                <option value="Pojemnosc">Capacity of SSD</option>
-                <option value="Pojemnosc">VideoMemory</option>
-                <option value="Rozmiar">Display type</option>
-                <option value="Kolor">Type Connections</option>
-                <option value="Pojemnosc">Other Information</option>
-                <option value="Pojemnosc">price</option>
+                <option value="Model">Model</option>
+                <option value="Capacity Of Ram">Capacity Of Ram</option>
+                <option value="Capacity of SSD">Capacity of SSD</option>
+                <option value="VideoMemory">VideoMemory</option>
+                <option value="Display type">Display type</option>
+                <option value="Type Connections">Type Connections</option>
+                <option value="Other Information">Other Information</option>
+                <option value="price">price</option>
               </select>
 
               <button
