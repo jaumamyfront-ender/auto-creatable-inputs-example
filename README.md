@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+auto create new inputs for groups of select options example clear js jsx html
+![Demo](./public/demo.png)
 
 ## Getting Started
 
