@@ -113,7 +113,6 @@ export default function ({ data }: UserDetails) {
       {isModalOpen && (
         <Modal onClose={handleCloseModal}>
           <h2 className="text-lg font-semibold mb-4">Add new product</h2>
-          <p className="text-sm">Tu możesz dodać formularz lub treść modala.</p>
           <DynamicInputs />
         </Modal>
       )}
@@ -181,6 +180,7 @@ export function DynamicInputs() {
 
   const handleSelectChange = (groupId: number, value: string) => {
     if (value) {
+      console.log(value);
       setSelectGroups((prev) =>
         prev.map((group) =>
           group.id === groupId
@@ -236,7 +236,7 @@ export function DynamicInputs() {
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
         disabled={selectGroups.length >= 10}
       >
-        Добавить селект
+        Add new Section
       </button>
 
       <div className="space-y-8 flex flex-row flex-wrap">
@@ -257,7 +257,7 @@ export function DynamicInputs() {
                 }}
                 className="block w-[250px] h-[34px] px-2 py-1 border border-gray-300 rounded bg-yellow-100 focus:outline-none focus:ring-0 focus:border-gray-400"
               >
-                <option value="">Выберите...</option>
+                <option value="">Change...</option>
                 <option value="Rozmiar">Model</option>
                 <option value="Kolor">Capacity Of Ram</option>
                 <option value="Pojemnosc">Capacity of SSD</option>
