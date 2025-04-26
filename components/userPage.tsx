@@ -114,6 +114,7 @@ export default function ({ data }: UserDetails) {
         <Modal onClose={handleCloseModal}>
           <h2 className="text-lg font-semibold mb-4">Add new product</h2>
           <p className="text-sm">Tu możesz dodać formularz lub treść modala.</p>
+          <DynamicInputs />
         </Modal>
       )}
     </div>
@@ -141,3 +142,174 @@ const Modal = ({
     </div>
   );
 };
+
+type InputItem = {
+  text: string;
+  option: string;
+  error: string | null;
+};
+
+type SelectGroup = {
+  id: number;
+  inputs: InputItem[];
+};
+
+export function DynamicInputs() {
+  const [selectGroups, setSelectGroups] = useState<SelectGroup[]>([]);
+
+  const handleAddSelect = () => {
+    if (selectGroups.length < 10) {
+      setSelectGroups([...selectGroups, { id: Date.now(), inputs: [] }]);
+    }
+  };
+  const handleRemoveSelectGroup = (groupId: number) => {
+    setSelectGroups((prev) => prev.filter((group) => group.id !== groupId));
+  };
+  const handleRemoveInput = (groupId: number, inputIndex: number) => {
+    setSelectGroups((prev) =>
+      prev.map((group) => {
+        if (group.id === groupId) {
+          const updatedInputs = group.inputs.filter(
+            (_, idx) => idx !== inputIndex
+          );
+          return { ...group, inputs: updatedInputs };
+        }
+        return group;
+      })
+    );
+  };
+
+  const handleSelectChange = (groupId: number, value: string) => {
+    if (value) {
+      setSelectGroups((prev) =>
+        prev.map((group) =>
+          group.id === groupId
+            ? {
+                ...group,
+                inputs: [
+                  ...group.inputs,
+                  { text: "", option: value, error: null },
+                ],
+              }
+            : group
+        )
+      );
+    }
+  };
+
+  const handleTextChange = (
+    groupId: number,
+    inputIndex: number,
+    value: string
+  ) => {
+    setSelectGroups((prev) =>
+      prev.map((group) => {
+        if (group.id === groupId) {
+          const updatedInputs = [...group.inputs];
+          updatedInputs[inputIndex] = {
+            ...updatedInputs[inputIndex],
+            text: value,
+            error: validate(value),
+          };
+          return { ...group, inputs: updatedInputs };
+        }
+        return group;
+      })
+    );
+  };
+
+  const validate = (value: string) => {
+    if (!value.trim()) return "Поле не должно быть пустым";
+    if (value.length < 3) return "Минимум 3 символа";
+    if (value.length > 20) return "Максимум 20 символов";
+    return null;
+  };
+
+  const [selectedValues, setSelectedValues] = useState<Record<number, string>>(
+    {}
+  );
+
+  return (
+    <div className="p-4">
+      <button
+        onClick={handleAddSelect}
+        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        disabled={selectGroups.length >= 10}
+      >
+        Добавить селект
+      </button>
+
+      <div className="space-y-8 flex flex-row flex-wrap">
+        {selectGroups.map((group) => (
+          <div key={group.id} className="space-y-4 mr-4">
+            <div className="flex flex-row">
+              <select
+                value={selectedValues[group.id] || ""}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  if (newValue) {
+                    handleSelectChange(group.id, newValue);
+                    setSelectedValues((prev) => ({
+                      ...prev,
+                      [group.id]: "",
+                    }));
+                  }
+                }}
+                className="block w-[250px] h-[34px] px-2 py-1 border border-gray-300 rounded bg-yellow-100 focus:outline-none focus:ring-0 focus:border-gray-400"
+              >
+                <option value="">Выберите...</option>
+                <option value="Rozmiar">Model</option>
+                <option value="Kolor">Capacity Of Ram</option>
+                <option value="Pojemnosc">Capacity of SSD</option>
+                <option value="Pojemnosc">VideoMemory</option>
+                <option value="Rozmiar">Display type</option>
+                <option value="Kolor">Type Connections</option>
+                <option value="Pojemnosc">Other Information</option>
+                <option value="Pojemnosc">price</option>
+              </select>
+
+              <button
+                onClick={() => handleRemoveSelectGroup(group.id)}
+                className="ml-2 px-3 py-1 bg-red-500 text-white rounded"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              {group.inputs.map((input, inputIndex) => (
+                <div
+                  key={inputIndex}
+                  className="space-y-2 flex flex-row relative w-[295px]"
+                >
+                  <input
+                    type="text"
+                    value={input.text}
+                    onChange={(e) =>
+                      handleTextChange(group.id, inputIndex, e.target.value)
+                    }
+                    className={`block w-full h-[34px] px-2 py-1 border rounded ${
+                      input.error ? "border-red-500" : "border-gray-300"
+                    } focus:outline-none focus:ring-0 focus:border-gray-400`}
+                    placeholder={
+                      input.option ? input.option : "Введите значение"
+                    }
+                  />
+                  {input.error && (
+                    <p className="text-red-500 text-sm">{input.error}</p>
+                  )}
+                  <button
+                    onClick={() => handleRemoveInput(group.id, inputIndex)}
+                    className="w-[16px] h-[32px] bg-red-500 text-white rounded absolute right-0 top-4 -translate-y-1/2"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

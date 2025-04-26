@@ -66,3 +66,44 @@
 //   );
 // };
 //
+import React, { useState } from "react";
+
+export default function DynamicInputs() {
+  const [inputs, setInputs] = useState<string[]>([]);
+
+  const handleAddInput = () => {
+    if (inputs.length < 3) {
+      setInputs([...inputs, ""]);
+    }
+  };
+
+  const handleChange = (index: number, value: string) => {
+    const updatedInputs = [...inputs];
+    updatedInputs[index] = value;
+    setInputs(updatedInputs);
+  };
+  console.log(inputs);
+  return (
+    <div className="p-4">
+      <button
+        onClick={handleAddInput}
+        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        disabled={inputs.length >= 3}
+      >
+        Добавить поле
+      </button>
+
+      <div className="space-y-2">
+        {inputs.map((value, index) => (
+          <input
+            key={index}
+            type="text"
+            value={value}
+            onChange={(e) => handleChange(index, e.target.value)}
+            className="block w-full px-2 py-1 border border-gray-300 rounded"
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
